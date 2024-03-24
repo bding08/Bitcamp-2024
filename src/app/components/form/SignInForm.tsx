@@ -16,6 +16,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import GoogleSignInBtn from "../GoogleSignInBtn";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   email: z
@@ -26,12 +28,30 @@ const FormSchema = z.object({
 });
 
 const SignInForm = () => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
-  const onSubmit = (values: z.infer<typeof FormSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+    const signInData = await signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      callbackUrl: "http://localhost:3000/home-page",
+    });
+
+    // console.log(signInData);
+
+    // if (signInData?.error) {
+    //   console.log(signInData.error);
+    // } else {
+    //   router.push("/home-page");
+    // }
   };
 
   return (
@@ -60,7 +80,6 @@ const SignInForm = () => {
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="password"
