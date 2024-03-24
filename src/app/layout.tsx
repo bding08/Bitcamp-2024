@@ -18,12 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className = 'h-dvh flex flex-col justify-center items-center' >
-          <Navbar/>
-          {children}  
+        <main className="h-dvh flex flex-col justify-center items-center">
+          <Navbar />
+          {children}
         </main>
-        
-        </body>
+      </body>
     </html>
   );
 }

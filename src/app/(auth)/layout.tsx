@@ -1,12 +1,10 @@
-import { FC, ReactNode } from "react"
+import { FC, ReactNode } from "react";
 
 interface AuthLayoutInterface {
-    children: ReactNode;
+  children: ReactNode;
 }
 const AuthLayout: FC<AuthLayoutInterface> = ({ children }) => {
-  return (
-    <div className='bg-slate-200 p-10 rounded-lg'>{children}</div>
-  )
-}
+  return <div className="bg-slate-200 p-10 rounded-lg">{children}</div>;
+};
 
-export default AuthLayout
+export default AuthLayout;
