@@ -18,6 +18,7 @@ import Link from "next/link";
 import GoogleSignInBtn from "../GoogleSignInBtn";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 const FormSchema = z.object({
   email: z
@@ -28,6 +29,7 @@ const FormSchema = z.object({
 });
 
 const SignInForm = () => {
+  const { toast } = useToast();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -42,16 +44,19 @@ const SignInForm = () => {
     const signInData = await signIn("credentials", {
       email: values.email,
       password: values.password,
-      callbackUrl: "http://localhost:3000/home-page",
+      redirect: false,
     });
 
-    // console.log(signInData);
-
-    // if (signInData?.error) {
-    //   console.log(signInData.error);
-    // } else {
-    //   router.push("/home-page");
-    // }
+    if (signInData?.error) {
+      toast({
+        title: "Error Signing In",
+        description: "Something went wrong!",
+        variant: "destructive",
+      });
+    } else {
+      router.push("/user-home-page");
+      router.refresh();
+    }
   };
 
   return (

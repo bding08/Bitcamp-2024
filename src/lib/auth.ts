@@ -6,6 +6,7 @@ import { compare } from "bcrypt";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
   },
@@ -52,4 +53,39 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      //   console.log(token, user);
+      if (user) {
+        return {
+          ...token,
+          user: user.username,
+        };
+      } else {
+        console.log("user is undefined");
+      }
+
+      console.log("token:");
+      console.log(token);
+      return token;
+    },
+    async session({ session, token }) {
+      //   console.log("session");
+      //   console.log({
+      //     ...session,
+      //     user: {
+      //       ...session.user,
+      //       username: token.user,
+      //     },
+      //   });
+
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          username: token.user,
+        },
+      };
+    },
+  },
 };

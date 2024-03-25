@@ -17,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import GoogleSignInBtn from "../GoogleSignInBtn";
 import { useRouter } from "next/navigation";
+import { toast } from "@/components/ui/use-toast";
 
 const FormSchema = z
   .object({
@@ -63,8 +64,13 @@ const SignUpForm = () => {
 
     if (response.ok) {
       router.push("/sign-in");
+      router.refresh();
     } else {
-      console.error("Registration failed");
+      toast({
+        title: "Error Signing In",
+        description: "Something went wrong!",
+        variant: "destructive",
+      });
     }
   };
 
