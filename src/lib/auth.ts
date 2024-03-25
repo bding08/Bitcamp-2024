@@ -65,8 +65,8 @@ export const authOptions: NextAuthOptions = {
         console.log("user is undefined");
       }
 
-      console.log("token:");
-      console.log(token);
+      // console.log("token:");
+      // console.log(token);
       return token;
     },
     async session({ session, token }) {
