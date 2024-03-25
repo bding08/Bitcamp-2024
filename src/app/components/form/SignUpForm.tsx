@@ -63,8 +63,8 @@ const SignUpForm = () => {
     });
 
     if (response.ok) {
-      router.push("/sign-in");
       router.refresh();
+      router.push("/sign-in");
     } else {
       toast({
         title: "Error Signing In",
