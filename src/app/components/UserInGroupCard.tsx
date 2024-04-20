@@ -1,5 +1,6 @@
 
 import { cn } from "@/lib/utils"
+import { FC } from "react";
 import {
   Card,
   CardContent,
@@ -9,9 +10,10 @@ import {
   CardTitle,
 } from "./ui/card"
 
-type CardProps = React.ComponentProps<typeof Card>
+type GroupProp = React.ComponentProps<typeof Card>
 
-export function UserInGroupCard() {
+
+const UserInGroupCard: FC<GroupProp> = (prop: GroupProp) => { 
   return (
     <Card>
         <CardHeader>

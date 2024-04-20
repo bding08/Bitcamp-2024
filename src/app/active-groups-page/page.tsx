@@ -1,4 +1,4 @@
-import { UserInGroupCard } from "../components/UserInGroupCard"
+import UserInGroupCard from "../components/UserInGroupCard"
 import './active-groups.css';
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
