@@ -18,7 +18,7 @@ const InterestPageFooter: FC<InterestPageFooterProp> = (
   const router = useRouter();
 
   const handleClick = async () => {
-    const response = await fetch("/api/user", {
+    const response = await fetch("/api/userInterests", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
