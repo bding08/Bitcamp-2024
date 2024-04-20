@@ -28,11 +28,15 @@ const UserRecommendations = async () => {
       email: emailID,
     }
   );
-  const eventObject: EventData["event"][] = response.data.map(
-    (item: { event: any }) => {
-      return item.event;
-    }
-  );
+  // const eventObject: EventData["event"][] = response.data.map(
+  //   (item: { event: any }) => {
+  //     return item.event;
+  //   }
+  // );
+  const eventObject = response.data.map((item: EventData) => ({
+    groupID: item.groupID,
+    event: item.event
+  }));
   if (session?.user) {
     return (
       <div className=" space-y-10 w-10/12 h-full pt-28">
@@ -41,24 +45,30 @@ const UserRecommendations = async () => {
         <div className="grid-3">
           {eventObject.map(
             (obj: {
-              title: string;
-              description: string;
-              imageURL: string;
-              url: string;
-              capacity: number;
-              date: string;
-              price: number;
+              groupID: number,
+              event: {
+                eventID: number;
+                description: string;
+                url: string;
+                imageURL: string;
+                title: string;
+                capacity: number;
+                date: string;
+                price: number;
+              };
             }) => {
               return (
                 <RecommendedGroupCard
-                  key={obj.title}
-                  title={obj.title}
-                  description={obj.description}
-                  imageurl={obj.imageURL}
-                  eventurl={obj.url}
-                  capacity={obj.capacity}
-                  date={obj.date}
-                  price={obj.price}
+                key={obj.groupID}
+                title={obj.event.title}
+                description={obj.event.description}
+                imageurl={obj.event.imageURL}
+                eventurl={obj.event.url}
+                capacity={obj.event.capacity}
+                date={obj.event.date}
+                price={obj.event.price}
+                groupID={obj.groupID}
+                email={emailID}
                 />
               );
             }

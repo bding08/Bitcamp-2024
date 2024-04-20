@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import {
   Card,
@@ -15,6 +17,8 @@ import {
   AccordionTrigger,
 } from "./ui/accordion";
 import { Button } from "./ui/button";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface GroupProp {
   title: string;
@@ -24,11 +28,26 @@ interface GroupProp {
   capacity: number;
   date: string;
   price: number;
+  groupID: number,
+  email: string | null | undefined,
 }
 
 type CardProps = React.ComponentProps<typeof Card>;
 
 const RecommendedGroupCard: FC<GroupProp> = (prop: GroupProp) => {
+
+  const router = useRouter();
+  const handleClick = async () => {
+    await axios.post(
+      "http://localhost:3000/api/joinGroup",
+      {
+        email: prop.email,
+        groupId: prop.groupID
+      }
+    );
+    router.refresh();
+  }
+
   function getOrdinalSuffix(day: number) {
     if (day > 3 && day < 21) return "th";
     switch (day % 10) {
@@ -72,7 +91,7 @@ const RecommendedGroupCard: FC<GroupProp> = (prop: GroupProp) => {
         </Accordion>
       </CardContent>
       <CardFooter>
-        <Button variant="longSecondary">
+        <Button onClick={handleClick} variant="longSecondary">
           Join Group
         </Button>
       </CardFooter>

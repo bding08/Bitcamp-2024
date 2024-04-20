@@ -8,19 +8,19 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 interface EventData {
-  groupID: number;
-  eventID: number;
-  event: {
+    groupID: number;
     eventID: number;
-    description: string;
-    url: string;
-    imageURL: string;
-    title: string;
-    capacity: number;
-    date: string;
-    price: number;
-  };
-}
+    event: {
+      eventID: number;
+      description: string;
+      url: string;
+      imageURL: string;
+      title: string;
+      capacity: number;
+      date: string;
+      price: number;
+    };
+  }
 
 const ActiveGroupsPage = async () => {
   
@@ -29,16 +29,16 @@ const ActiveGroupsPage = async () => {
   if (session?.user && session?.user.email) {
     // console.log(session);
      // Call fetchGroups when the component mounts
-
+    const emailID = session?.user.email;
     const response = await axios.post("http://localhost:3000/api/groupsOfUser", {
       email: session?.user.email,
     });
     
     // Usage example:
-    const eventObject: EventData['event'][] = response.data.map((item: { event: any; }) => {
-      // Return the event property of each object
-      return item.event;
-    });
+    const eventObject = response.data.map((item: EventData) => ({
+        groupID: item.groupID,
+        event: item.event
+      }));
 
     //console.log("Print");
     //console.log(events);
@@ -49,18 +49,36 @@ const ActiveGroupsPage = async () => {
             <h1 className="text-4xl">Your Groups Page</h1>
             
             <div className = "grid-3">
-            {eventObject.map((obj: { title: string; description: string; imageURL: string; url: string; capacity: number; date: string, price: number}) => {
-            return (<RecommendedGroupCard
-              key={obj.title}
-              title={obj.title}
-              description={obj.description}
-              imageurl={obj.imageURL}
-              eventurl={obj.url}
-              capacity={obj.capacity}
-              date={obj.date}
-              price={obj.price}
-            />);
-          })}
+            {eventObject.map(
+            (obj: {
+              groupID: number,
+              event: {
+                eventID: number;
+                description: string;
+                url: string;
+                imageURL: string;
+                title: string;
+                capacity: number;
+                date: string;
+                price: number;
+              };
+            }) => {
+              return (
+                <RecommendedGroupCard
+                key={obj.groupID}
+                title={obj.event.title}
+                description={obj.event.description}
+                imageurl={obj.event.imageURL}
+                eventurl={obj.event.url}
+                capacity={obj.event.capacity}
+                date={obj.event.date}
+                price={obj.event.price}
+                groupID={obj.groupID}
+                email={emailID}
+                />
+              );
+            }
+          )}
             </div>
             
         </div>
