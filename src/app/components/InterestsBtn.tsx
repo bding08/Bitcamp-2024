@@ -1,10 +1,10 @@
 "use client";
 
 import React, { FC, useState } from "react";
-import { Badge } from "@/app/components/ui/badge";
 import { Button } from "./ui/button";
 
 interface InterestProp {
+  key: string;
   name: string;
   interests: string[];
 }
@@ -18,10 +18,15 @@ type variant =
   | "link";
 
 const InterestsBtn: FC<InterestProp> = (prop: InterestProp) => {
-  const [btnClass, setBtnClass] = useState("outline");
+  const currVariant = prop.interests.includes(prop.name as string)
+    ? "secondary"
+    : "outline";
+
+  const [btnVaraint, setBtnVariant] = useState(currVariant);
+  // const session = await getServerSession(authOptions);
 
   const handleClick = () => {
-    const newVariant = btnClass === "secondary" ? "outline" : "secondary";
+    const newVariant = btnVaraint === "secondary" ? "outline" : "secondary";
 
     if (!prop.interests.includes(prop.name)) {
       prop.interests.push(prop.name);
@@ -32,8 +37,8 @@ const InterestsBtn: FC<InterestProp> = (prop: InterestProp) => {
       );
     }
 
-    setBtnClass(newVariant);
-    console.log(prop.interests);
+    setBtnVariant(newVariant);
+    console.log("test: " + prop.interests);
   };
 
   return (
@@ -42,7 +47,7 @@ const InterestsBtn: FC<InterestProp> = (prop: InterestProp) => {
       <Button
         className="text-lg w-full"
         onClick={handleClick}
-        variant={btnClass as variant}
+        variant={btnVaraint as variant}
       >
         {prop.name}
       </Button>{" "}
