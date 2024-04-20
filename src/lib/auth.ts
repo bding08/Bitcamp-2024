@@ -62,7 +62,7 @@ export const authOptions: NextAuthOptions = {
           user: user.username,
         };
       } else {
-        console.log("user is undefined");
+        
       }
 
       // console.log("token:");
