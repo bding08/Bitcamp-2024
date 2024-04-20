@@ -54,7 +54,7 @@ const SignInForm = () => {
         variant: "destructive",
       });
     } else {
-      router.push("/setup");
+      router.push("/interests");
       // router.push("/user-home-page");
       router.refresh();
     }
