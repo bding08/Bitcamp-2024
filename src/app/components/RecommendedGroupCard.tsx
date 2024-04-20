@@ -66,11 +66,11 @@ const RecommendedGroupCard: FC<GroupProp> = (prop: GroupProp) => {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
-      </CardContent>
-      <CardFooter>
         <a href={prop.eventurl} target="_blank">
           Link to Event
         </a>
+      </CardContent>
+      <CardFooter>
       </CardFooter>
     </Card>
   );

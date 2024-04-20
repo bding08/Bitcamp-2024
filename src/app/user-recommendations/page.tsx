@@ -9,35 +9,8 @@ const UserRecommendations = async () => {
   const emailID = session?.user.email;
   const response = await axios.post("http://localhost:3000/api/recommended-groups", {
     email: emailID,
-  // }).then(function (response) {
-  //   // const firstEvent = response.data.events[0];
-  //   // console.log("First event is: ", firstEvent);
-  //   // console.log("Events are: ", response.data.events);
-  //   const eventObject = response.data.events;
-  // })
-  // .catch(function (error) {
-  //   console.log(error);
-  // });
 });
   const eventObject = response.data.events;
-
-  // fetch("/api/userInterests", {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify({
-  //     email: emailID,
-  //   }),
-  // })
-  //   .then((res) => res.json())
-  //   .then((data) => {
-  //     console.log("data: " + data.interests);
-  //     const arr: string[] = data.interests;
-  //     console.log("arr: " + arr);
-  //     console.log("arr len: " + arr.length);
-  //     // return arr;
-  //   });
 
   // console.log(session);
   // const eventObject = [
@@ -63,7 +36,6 @@ const UserRecommendations = async () => {
   //   },
   // ];
   if (session?.user) {
-    // console.log("username: " + session.user.username);
     return (
       <div className=" space-y-10 w-10/12 h-full pt-28">
         <h1 className="text-4xl">Recommended Activities</h1>

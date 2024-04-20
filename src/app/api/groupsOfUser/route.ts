@@ -24,15 +24,16 @@ export async function POST(req: Request) {
         select: { 
           userGroups: {
             select: {
-              eventID: true // Select only the groupID field from userGroups
+              groupID: true // Select only the groupID field from userGroups
             }
           }
         }
     });
 
+
     var groupIDs: number[] = [];
     if (groupsOfUser) {
-      groupIDs = groupsOfUser.userGroups.map(userGroup => userGroup.eventID);
+      groupIDs = groupsOfUser.userGroups.map(userGroup => userGroup.groupID);
     }
     else {
       console.log(groupIDs, "did not return");
