@@ -19,6 +19,7 @@ import GoogleSignInBtn from "../GoogleSignInBtn";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
+import { useState } from "react";
 
 const FormSchema = z.object({
   email: z
@@ -32,6 +33,8 @@ const SignInForm = () => {
   const { toast } = useToast();
   const router = useRouter();
 
+  const [interestArr, setInterestArr] = useState([]);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -41,6 +44,8 @@ const SignInForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+    const arr: string[] = [];
+
     const signInData = await signIn("credentials", {
       email: values.email,
       password: values.password,
@@ -54,9 +59,31 @@ const SignInForm = () => {
         variant: "destructive",
       });
     } else {
-      router.push("/interests");
-      // router.push("/user-home-page");
-      router.refresh();
+      await fetch("/api/userInterests", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: values.email,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("data: " + data.interests);
+          const arr: string[] = data.interests;
+          console.log("arr: " + arr);
+          console.log("arr len: " + arr.length);
+          if (arr.length == 0) {
+            router.push("/interests");
+          } else {
+            router.push("/user-recommendations");
+          }
+
+          router.refresh();
+          // return arr;
+        });
+      // console.log("arr len in if statement: " + arr.length);
     }
   };
 
