@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import InterestsBtn from "../components/InterestsBtn";
 import { Button } from "../components/ui/button";
 import { VariantProps } from "class-variance-authority";
+import InterestPageFooter from "../components/InterestPageFooter";
 
 type variant =
   | "default"
@@ -57,6 +58,7 @@ const setupRoute = () => {
           <InterestsBtn name={interestItem} />
         ))}
       </div>
+      <InterestPageFooter />
     </div>
   );
 };
