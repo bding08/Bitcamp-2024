@@ -1,5 +1,4 @@
 import UserInGroupCard from "../components/UserInGroupCard";
-import RecommendedGroupCard from "../components/RecommendedGroupCard";
 import './active-groups.css';
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth"
@@ -64,7 +63,7 @@ const ActiveGroupsPage = async () => {
               };
             }) => {
               return (
-                <RecommendedGroupCard
+                <UserInGroupCard
                 key={obj.groupID}
                 title={obj.event.title}
                 description={obj.event.description}
