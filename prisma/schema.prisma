@@ -20,4 +20,24 @@ model User {
   interests String[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  recGroups   Group[] @relation("recommendedGroups")
+  userGroups  Group[]  @relation("memberOfGroups")
+}
+
+model Event {
+  eventID     Int      @id
+  description String
+  url         String   @db.VarChar(255)
+  imageURL    String   @db.VarChar(255)
+  title       String
+  capacity    Int
+  groups      Group[]
+}
+
+model Group {
+  groupID     Int      @id @default(autoincrement())
+  eventID     Int
+  event       Event    @relation(fields: [eventID], references: [eventID])
+  users       User[]   @relation("memberOfGroups")
+  viewers     User[]   @relation("recommendedGroups")
 }
