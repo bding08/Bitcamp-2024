@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 
 interface InterestProp {
   name: string;
+  interests: string[];
 }
 
 type variant =
@@ -21,7 +22,18 @@ const InterestsBtn: FC<InterestProp> = (prop: InterestProp) => {
 
   const handleClick = () => {
     const newVariant = btnClass === "secondary" ? "outline" : "secondary";
+
+    if (!prop.interests.includes(prop.name)) {
+      prop.interests.push(prop.name);
+    } else {
+      prop.interests.splice(
+        prop.interests.indexOf(prop.name),
+        prop.interests.indexOf(prop.name) + 1
+      );
+    }
+
     setBtnClass(newVariant);
+    console.log(prop.interests);
   };
 
   return (

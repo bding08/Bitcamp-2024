@@ -1,16 +1,44 @@
 "use client";
 
 import { Users } from "lucide-react";
-import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
 import { useRouter } from "next/navigation";
+import { FC } from "react";
+import { toast } from "./ui/use-toast";
 
-const InterestPageFooter = () => {
+interface InterestPageFooterProp {
+  email: string | null | undefined;
+  interests: string[];
+}
+
+const InterestPageFooter: FC<InterestPageFooterProp> = (
+  prop: InterestPageFooterProp
+) => {
   //   const session = await getServerSession(authOptions);
   const router = useRouter();
 
-  const handleClick = () => {
-    router.push("/user-recommendations");
+  const handleClick = async () => {
+    const response = await fetch("/api/user", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: prop.email,
+        interests: prop.interests,
+      }),
+    });
+
+    if (response.ok) {
+      router.refresh();
+      router.push("/user-recommendations");
+    } else {
+      toast({
+        title: "Error Updating Interests",
+        description: "Something went wrong!",
+        variant: "destructive",
+      });
+    }
   };
 
   return (

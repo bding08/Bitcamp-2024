@@ -12,10 +12,46 @@ const userSchema = z.object({
   password: z.string().min(1, { message: "Password is Required" }),
 });
 
-export async function POSTUserInterests(req: Request) {
+const interestSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "Email is Required" })
+    .email("Invalid Email"),
+  interests: z.array(z.string()),
+});
+
+export async function PUT(req: Request, res: Response) {
   try {
+    const body = await req.json();
+
+    console.log(body);
+
+    const { email, interests } = interestSchema.parse(body);
+
+    const updatedUser = await db.user.update({
+      where: {
+        email: email,
+      },
+      data: {
+        interests: interests,
+      },
+    });
+
+    return NextResponse.json(
+      {
+        // user: rest,
+        message: "Interests successfully created",
+      },
+      { status: 200 }
+    );
   } catch (error) {
-    console.log(error);
+    return NextResponse.json(
+      {
+        // user: rest,
+        message: "Interests unsuccessfully created",
+      },
+      { status: 500 }
+    );
   }
 }
 
