@@ -19,7 +19,7 @@ const navbar = async () => {
         <Link href="/user-recommendations">
         <Button variant="outline2">Recommended Activities</Button>
         </Link>
-        <Link href="/groups-page">
+        <Link href="/active-groups-page">
         <Button variant="outline2">User Groups</Button>
         </Link>
         </div>
