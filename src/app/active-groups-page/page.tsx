@@ -17,6 +17,8 @@ interface EventData {
     imageURL: string;
     title: string;
     capacity: number;
+    date: string;
+    price: number;
   };
 }
 
@@ -47,14 +49,16 @@ const ActiveGroupsPage = async () => {
             <h1 className="text-4xl">Your Groups Page</h1>
             
             <div className = "grid-3">
-              {eventObject.map((obj: { title: string; description: string; imageURL: string; url: string; capacity: number; }) => {
-                return (<RecommendedGroupCard
+            {eventObject.map((obj: { title: string; description: string; imageURL: string; url: string; capacity: number; date: string, price: number}) => {
+            return (<RecommendedGroupCard
               key={obj.title}
               title={obj.title}
               description={obj.description}
               imageurl={obj.imageURL}
               eventurl={obj.url}
               capacity={obj.capacity}
+              date={obj.date}
+              price={obj.price}
             />);
           })}
             </div>

@@ -30,6 +30,8 @@ model Event {
   url         String   @db.VarChar(255)
   imageURL    String   @db.VarChar(255)
   title       String
+  price       Int       @default(0)
+  date        DateTime  @default(now())
   capacity    Int
   groups      Group[]
 }

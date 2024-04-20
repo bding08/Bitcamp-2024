@@ -69,7 +69,7 @@ const UserRecommendations = async () => {
         <h1 className="text-4xl">Recommended Activities</h1>
 
         <div className="grid-3">
-          {eventObject.map((obj: { title: string; description: string; imageURL: string; url: string; capacity: number; }) => {
+          {eventObject.map((obj: { title: string; description: string; imageURL: string; url: string; capacity: number; date: string, price: number}) => {
             return (<RecommendedGroupCard
               key={obj.title}
               title={obj.title}
@@ -77,29 +77,10 @@ const UserRecommendations = async () => {
               imageurl={obj.imageURL}
               eventurl={obj.url}
               capacity={obj.capacity}
+              date={obj.date}
+              price={obj.price}
             />);
           })}
-          {/* <RecommendedGroupCard
-            title={eventObject[0].title}
-            description={eventObject[0].description}
-            imageurl={eventObject[0].imageURL}
-            eventurl={eventObject[0].url}
-            capacity={eventObject[0].capacity}
-          />
-          <RecommendedGroupCard
-            title={eventObject[1].title}
-            description={eventObject[1].description}
-            imageurl={eventObject[1].imageURL}
-            eventurl={eventObject[1].url}
-            capacity={eventObject[1].capacity}
-          />
-          <RecommendedGroupCard
-            title={eventObject[2].title}
-            description={eventObject[2].description}
-            imageurl={eventObject[2].imageURL}
-            eventurl={eventObject[2].url}
-            capacity={eventObject[2].capacity}
-          /> */}
         </div>
       </div>
     );
