@@ -63,30 +63,6 @@ const UserRecommendations = async () => {
               );
             }
           )}
-          {eventObject.map(
-            (obj: {
-              title: string;
-              description: string;
-              imageURL: string;
-              url: string;
-              capacity: number;
-              date: string;
-              price: number;
-            }) => {
-              return (
-                <RecommendedGroupCard
-                  key={obj.title}
-                  title={obj.title}
-                  description={obj.description}
-                  imageurl={obj.imageURL}
-                  eventurl={obj.url}
-                  capacity={obj.capacity}
-                  date={obj.date}
-                  price={obj.price}
-                />
-              );
-            }
-          )}
         </div>
       </div>
     );
