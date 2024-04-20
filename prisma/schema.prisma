@@ -25,7 +25,7 @@ model User {
 }
 
 model Event {
-  eventID     Int      @id
+  eventID     Int      @id @default(autoincrement())
   description String
   url         String   @db.VarChar(255)
   imageURL    String   @db.VarChar(255)
