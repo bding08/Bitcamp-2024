@@ -10,6 +10,22 @@ const groupSchema = z.object({
     .email("Invalid Email"),
 });
 
+export async function GET() {
+  try {
+    const events = await db.event.findMany({
+        select: {
+          title: true,
+        },
+      },
+    );
+  
+    return NextResponse.json(events, { status: 200 });
+  }
+    catch (error) {
+    console.log(error);
+  }
+}
+
 export async function POST(req: Request) {
   try {
     
