@@ -11,7 +11,7 @@ import {
 
 type CardProps = React.ComponentProps<typeof Card>
 
-export function CardDemo() {
+export function UserInGroupCard() {
   return (
     <Card>
         <CardHeader>
@@ -27,4 +27,6 @@ export function CardDemo() {
         </CardFooter>
     </Card>
   )
-}
+};
+
+export default UserInGroupCard;
