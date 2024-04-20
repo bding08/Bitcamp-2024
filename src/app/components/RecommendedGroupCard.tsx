@@ -14,6 +14,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "./ui/accordion";
+import { Button } from "./ui/button";
 
 interface GroupProp {
   title: string;
@@ -52,25 +53,28 @@ const RecommendedGroupCard: FC<GroupProp> = (prop: GroupProp) => {
   return (
     <Card>
       <CardHeader>
-        <img src={prop.imageurl} alt="Beautiful sunset behind mountains" />
+        <img className="rounded-md pb-3" src={prop.imageurl} alt="Beautiful sunset behind mountains" />
         <CardTitle>{prop.title}</CardTitle>
       </CardHeader>
       <CardContent>
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="item-1">
-            <AccordionTrigger>Description</AccordionTrigger>
+            <AccordionTrigger>More Information</AccordionTrigger>
             <AccordionContent>
-              <p>${prop.price}</p>
-              <p>{formattedDate}</p>
-              <p>{prop.description}</p>
+              <p className="pb-1 text-lg font-semibold">${prop.price}</p>
+              <p className="pb-1 text-lg font-semibold">{formattedDate}</p>
+              <p className="pb-1">{prop.description}</p>
+              <a href={prop.eventurl} target="_blank">
+          Link to Event
+        </a>
             </AccordionContent>
           </AccordionItem>
         </Accordion>
-        <a href={prop.eventurl} target="_blank">
-          Link to Event
-        </a>
       </CardContent>
       <CardFooter>
+        <Button variant="longSecondary">
+          Join Group
+        </Button>
       </CardFooter>
     </Card>
   );

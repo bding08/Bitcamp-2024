@@ -12,45 +12,42 @@ const groupSchema = z.object({
 
 export async function POST(req: Request) {
   try {
+    
     const body = await req.json();
-    const {email} = groupSchema.parse(body);
+    const { email } = groupSchema.parse(body);
 
-    if (!email) {
-      return NextResponse.json(
-        {
-          message: "Can't get email",
-        },
-        { status: 400 }
-      );
-    }
+    // Query to fetch group information and related events
 
-    const eventList = await db.user.findMany({
-      where: {
-        email: email,
-      },
-      select: {
-        recGroups: {
-          select: {
-            event: true,
+    const groupsOfUser = await db.user.findFirst({
+        where: {email : email},
+        select: { 
+          recGroups: {
+            select: {
+              groupID: true // Select only the groupID field from userGroups
+            }
           }
         }
-      }
     });
 
-    const events = eventList.flatMap(user => user.recGroups.map(group => group.event));
 
-    return NextResponse.json(
-      {
-        events,
+    var groupIDs: number[] = [];
+    if (groupsOfUser) {
+      groupIDs = groupsOfUser.recGroups.map(group => group.groupID);
+    }
+    else {
+      console.log(groupIDs, "did not return");
+    }
+
+    const groupWithEvents = await db.group.findMany({
+      where: { 
+        groupID: {in: groupIDs}
       },
-      { status: 200 }
-    );
-  } catch (error) {
-    return NextResponse.json(
-      {
-        message: "Can't get interests",
-      },
-      { status: 501 }
-    );
+      include: { event: true } // Include the related event
+    });
+  
+    return NextResponse.json(groupWithEvents, { status: 200 });
+  }
+    catch (error) {
+    console.log("Error in post");
   }
 }
