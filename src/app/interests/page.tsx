@@ -1,13 +1,12 @@
-// "use client";
-
 import React, { useState } from "react";
 import InterestsBtn from "../components/InterestsBtn";
 import InterestPageFooter from "../components/InterestPageFooter";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import router from "next/router";
+import axios from "axios";
 
 const setupRoute = async () => {
-  const interests: string[] = [];
   const session = await getServerSession(authOptions);
 
   const interestList = [
@@ -37,6 +36,11 @@ const setupRoute = async () => {
     "Social justice and advocacy",
   ];
 
+  const response = await axios.post("http://localhost:3000/api/userInterests", {
+    email: session?.user.email,
+  });
+  const interestArr: string[] = response.data.interests;
+
   if (session?.user) {
     return (
       <div className="text-3xl space-y-5 absolute inset-x-0 top-20 ">
@@ -44,11 +48,18 @@ const setupRoute = async () => {
 
         <div className="grid items-center justify-center grid-cols-4 w-full gap-3 container px10">
           {interestList.map((interestItem) => (
-            <InterestsBtn name={interestItem} interests={interests} />
+            <InterestsBtn
+              key={interestItem}
+              name={interestItem}
+              interests={interestArr}
+            />
           ))}
         </div>
 
-        <InterestPageFooter email={session.user.email} interests={interests} />
+        <InterestPageFooter
+          email={session.user.email}
+          interests={interestArr}
+        />
       </div>
     );
   }

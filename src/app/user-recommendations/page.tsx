@@ -7,9 +7,12 @@ import axios from "axios";
 const UserRecommendations = async () => {
   const session = await getServerSession(authOptions);
   const emailID = session?.user.email;
-  const response = await axios.post("http://localhost:3000/api/recommended-groups", {
-    email: emailID,
-});
+  const response = await axios.post(
+    "http://localhost:3000/api/recommended-groups",
+    {
+      email: emailID,
+    }
+  );
   const eventObject = response.data.events;
 
   // console.log(session);
@@ -41,18 +44,30 @@ const UserRecommendations = async () => {
         <h1 className="text-4xl">Recommended Activities</h1>
 
         <div className="grid-3">
-          {eventObject.map((obj: { title: string; description: string; imageURL: string; url: string; capacity: number; date: string, price: number}) => {
-            return (<RecommendedGroupCard
-              key={obj.title}
-              title={obj.title}
-              description={obj.description}
-              imageurl={obj.imageURL}
-              eventurl={obj.url}
-              capacity={obj.capacity}
-              date={obj.date}
-              price={obj.price}
-            />);
-          })}
+          {eventObject.map(
+            (obj: {
+              title: string;
+              description: string;
+              imageURL: string;
+              url: string;
+              capacity: number;
+              date: string;
+              price: number;
+            }) => {
+              return (
+                <RecommendedGroupCard
+                  key={obj.title}
+                  title={obj.title}
+                  description={obj.description}
+                  imageurl={obj.imageURL}
+                  eventurl={obj.url}
+                  capacity={obj.capacity}
+                  date={obj.date}
+                  price={obj.price}
+                />
+              );
+            }
+          )}
         </div>
       </div>
     );
