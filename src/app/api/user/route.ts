@@ -12,6 +12,13 @@ const userSchema = z.object({
   password: z.string().min(1, { message: "Password is Required" }),
 });
 
+export async function POSTUserInterests(req: Request) {
+  try {
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
