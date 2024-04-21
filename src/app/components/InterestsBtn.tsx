@@ -2,11 +2,12 @@
 
 import React, { FC, useState } from "react";
 import { Button } from "./ui/button";
+import { string } from "zod";
 
 interface InterestProp {
   key: string;
   name: string;
-  interests: string[];
+  interests: Set<String>;
 }
 
 type variant =
@@ -18,7 +19,7 @@ type variant =
   | "link";
 
 const InterestsBtn: FC<InterestProp> = (prop: InterestProp) => {
-  const currVariant = prop.interests.includes(prop.name as string)
+  const currVariant = prop.interests.has(prop.name as string)
     ? "secondary"
     : "outline";
 
@@ -28,17 +29,16 @@ const InterestsBtn: FC<InterestProp> = (prop: InterestProp) => {
   const handleClick = () => {
     const newVariant = btnVaraint === "secondary" ? "outline" : "secondary";
 
-    if (!prop.interests.includes(prop.name)) {
-      prop.interests.push(prop.name);
+    if (!prop.interests.has(prop.name)) {
+      prop.interests.add(prop.name);
     } else {
-      prop.interests.splice(
-        prop.interests.indexOf(prop.name),
-        prop.interests.indexOf(prop.name) + 1
-      );
+      prop.interests.delete(prop.name);
     }
 
     setBtnVariant(newVariant);
-    console.log("test: " + prop.interests);
+
+    const arr: String[] = Array.from(prop.interests);
+    console.log("test: " + arr);
   };
 
   return (

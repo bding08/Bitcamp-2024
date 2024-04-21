@@ -22,65 +22,58 @@ const recommendationSchema = z.object({
 export async function GET() {
   try {
     const events = await db.event.findMany({
-        select: {
-          title: true,
-          eventID: true,
-        },
+      select: {
+        title: true,
+        eventID: true,
       },
-    );
-  
+    });
+
     return NextResponse.json(events, { status: 200 });
-  }
-    catch (error) {
+  } catch (error) {
     console.log(error);
   }
 }
 
 export async function POST(req: Request) {
   try {
-    
     const body = await req.json();
-    const { email} = groupSchema.parse(body);
+    const { email } = groupSchema.parse(body);
 
     // Query to fetch group information and related events
 
     const groupsOfUser = await db.user.findFirst({
-        where: {email : email},
-        select: { 
-          recGroups: {
-            select: {
-              groupID: true // Select only the groupID field from userGroups
-            }
-          }
-        }
+      where: { email: email },
+      select: {
+        recGroups: {
+          select: {
+            groupID: true, // Select only the groupID field from userGroups
+          },
+        },
+      },
     });
-
 
     var groupIDs: number[] = [];
     if (groupsOfUser) {
-      groupIDs = groupsOfUser.recGroups.map(group => group.groupID);
-    }
-    else {
+      groupIDs = groupsOfUser.recGroups.map((group) => group.groupID);
+    } else {
       console.log(groupIDs, "did not return");
     }
 
     const groupWithEvents = await db.group.findMany({
-      where: { 
-        groupID: {in: groupIDs}
+      where: {
+        groupID: { in: groupIDs },
       },
-      include: { event: true } // Include the related event
+      include: { event: true }, // Include the related event
     });
-  
+
     return NextResponse.json(groupWithEvents, { status: 200 });
-  }
-    catch (error) {
+  } catch (error) {
     console.log("Error in post");
   }
 }
 
 export async function PUT(req: Request) {
   try {
-    
     const body = await req.json();
     const { email, eventIDs } = recommendationSchema.parse(body);
 
@@ -93,7 +86,7 @@ export async function PUT(req: Request) {
     });
 
     if (!user) {
-      throw new Error('User not found');
+      throw new Error("User not found");
     }
 
     // Step 2: Find the groups that have the specified eventIDs
@@ -106,11 +99,15 @@ export async function PUT(req: Request) {
     });
 
     if (groups.length === 0) {
-      throw new Error('No groups found with the specified eventIDs');
+      throw new Error("No groups found with the specified eventIDs");
     }
-    
-    const groupsArray = groups.map((item: { groupID: number, eventID: number }) => ({ groupID: item.groupID }));
-    
+
+    const groupsArray = groups.map(
+      (item: { groupID: number; eventID: number }) => ({
+        groupID: item.groupID,
+      })
+    );
+
     await db.user.update({
       where: {
         id: user.id,
@@ -132,11 +129,10 @@ export async function PUT(req: Request) {
         },
       },
     });
-  
+
     return NextResponse.json(groupsArray, { status: 200 });
-  }
-    catch (error) {
-      console.log(error)
-      return NextResponse.json({ status: 501 });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ status: 501 });
   }
 }

@@ -46,6 +46,7 @@ const setupRoute = async () => {
   });
 
   const interestArr: string[] = response.data.interests;
+  const interestSet = new Set(interestArr);
 
   if (session?.user) {
     return (
@@ -61,14 +62,14 @@ const setupRoute = async () => {
                 <InterestsBtn
                   key={"dummy"}
                   name={"dummmy"}
-                  interests={interestArr}
+                  interests={interestSet}
                 />
               </div>
               {fitness.map((interestItem) => (
                 <InterestsBtn
                   key={interestItem}
                   name={interestItem}
-                  interests={interestArr}
+                  interests={interestSet}
                 />
               ))}
             </div>
@@ -82,7 +83,7 @@ const setupRoute = async () => {
                 <InterestsBtn
                   key={interestItem}
                   name={interestItem}
-                  interests={interestArr}
+                  interests={interestSet}
                 />
               ))}
             </div>
@@ -96,7 +97,7 @@ const setupRoute = async () => {
                 <InterestsBtn
                   key={interestItem}
                   name={interestItem}
-                  interests={interestArr}
+                  interests={interestSet}
                 />
               ))}
             </div>
@@ -110,7 +111,7 @@ const setupRoute = async () => {
                 <InterestsBtn
                   key={interestItem}
                   name={interestItem}
-                  interests={interestArr}
+                  interests={interestSet}
                 />
               ))}
             </div>
@@ -120,7 +121,7 @@ const setupRoute = async () => {
         <div className="sticky bottom-0 left-0 pt-16">
           <InterestPageFooter
             email={session.user.email}
-            interests={interestArr}
+            interests={interestSet}
           />
         </div>
       </div>

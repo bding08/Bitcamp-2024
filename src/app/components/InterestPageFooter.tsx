@@ -11,7 +11,7 @@ import { authOptions } from "@/lib/auth";
 
 interface InterestPageFooterProp {
   email: string | null | undefined;
-  interests: string[];
+  interests: Set<String>;
 }
 
 interface Event {
@@ -84,23 +84,28 @@ const InterestPageFooter: FC<InterestPageFooterProp> = (
 
     console.log(eventsTitlesArray);
     console.log(prop.interests);
+    const interestArr: String[] = Array.from(prop.interests);
+
+    console.log("interestArr: " + interestArr);
 
     const api_key = process.env.NEXT_PUBLIC_GEMINI_KEY;
 
     const genAI = new GoogleGenerativeAI(api_key);
     const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro-latest" });
 
-    var prompt = `You are deciding how to recommend what a person should do for fun over the weekend.`;
-    prompt += `The person has the following hobbies: ${prop.interests.join(
+    var prompt = `You are recommending what events a person might be interested in based on their interests.`;
+    prompt += `The person has the following hobbies: ${interestArr.join(
       ", "
     )}.`;
     prompt += ` These are some events happening in DC soon: ${formattedString}`;
     prompt += ` Given the person\'s interests, rank those events in order of which the person would most enjoy based on the event title.`;
+    prompt += ` Make sure to rank the events based on the person's hobbies that we provided. Do not select events with comedy in the tile unless otherwise prompted`;
     prompt += ` For the output, give only the ids of the events in a comma seperated array. Make sure there are no hobbies in the final output.`;
     prompt += ` Only use the events in the output. Limit to the 5 best matching events.`;
 
     const result = await model.generateContent(prompt);
 
+    console.log(result);
     if (result == null || result == undefined) {
       console.error("Gemini generate failed.");
     }
@@ -118,6 +123,8 @@ const InterestPageFooter: FC<InterestPageFooterProp> = (
   };
 
   const handleClick = async () => {
+    const interestArr: String[] = Array.from(prop.interests);
+
     const response = await fetch("/api/userInterests", {
       method: "PUT",
       headers: {
@@ -125,7 +132,7 @@ const InterestPageFooter: FC<InterestPageFooterProp> = (
       },
       body: JSON.stringify({
         email: prop.email,
-        interests: prop.interests,
+        interests: interestArr,
       }),
     });
 
