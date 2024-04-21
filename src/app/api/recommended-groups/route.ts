@@ -117,6 +117,17 @@ export async function PUT(req: Request) {
       },
       data: {
         recGroups: {
+          set: [], // Remove all existing connections
+        },
+      },
+    });
+
+    await db.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        recGroups: {
           connect: groupsArray,
         },
       },

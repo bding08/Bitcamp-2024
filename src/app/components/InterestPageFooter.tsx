@@ -93,9 +93,14 @@ const InterestPageFooter: FC<InterestPageFooterProp> = (
     const modelResponse = await result.response;
     const text = modelResponse.text();
 
-    const textArray: number[] = text;
+    const outputArray = text.split(", ").map(Number);
 
-    return textArray[0];
+    console.log(outputArray);
+    
+    await axios.put("/api/recommended-groups", {
+      email: prop.email,
+      eventIDs: outputArray,
+    });
   } 
 
   const handleClick = async () => {
@@ -121,9 +126,8 @@ const InterestPageFooter: FC<InterestPageFooterProp> = (
       });
     }
 
-    const gptResults = recommendGroupsWithGPT();
-    
-    
+    recommendGroupsWithGPT();
+    router.refresh();
   };
 
   return (
