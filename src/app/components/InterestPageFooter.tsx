@@ -1,6 +1,5 @@
 "use client";
 
-import { Users } from "lucide-react";
 import { Button, buttonVariants } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
@@ -32,8 +31,10 @@ const InterestPageFooter: FC<InterestPageFooterProp> = (
 
     console.log(eventsArray)
     console.log(prop.interests)
+    
+    const api_key = process.env.NEXT_PUBLIC_GEMINI_KEY;
 
-    const api_key = "AIzaSyALezWBKRK3xrxAs8sfw4y2TiWPWzY0ijM";
+    console.log(api_key);
     const genAI = new GoogleGenerativeAI(api_key);
     const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro-latest"});
 
