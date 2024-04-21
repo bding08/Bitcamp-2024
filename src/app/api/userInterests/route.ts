@@ -61,7 +61,7 @@ export async function PUT(req: Request, res: Response) {
   try {
     const body = await req.json();
 
-    console.log(body);
+    // console.log(body);
 
     const { email, interests } = interestSchema.parse(body);
 
