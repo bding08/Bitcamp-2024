@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import "./group-card.css";
 import {
   Card,
   CardContent,
@@ -20,6 +21,19 @@ import { Button } from "./ui/button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "./ui/navigation-menu"
+
+import { ScrollArea } from "./ui/scroll-area"
+
 interface GroupProp {
   title: string;
   description: string;
@@ -37,6 +51,7 @@ type CardProps = React.ComponentProps<typeof Card>;
 const UserInGroupCard: FC<GroupProp> = (prop: GroupProp) => {
 
   const router = useRouter();
+
   const handleClick = async () => {
     await axios.post(
       "http://localhost:3000/api/deleteGroup",
@@ -69,6 +84,7 @@ const UserInGroupCard: FC<GroupProp> = (prop: GroupProp) => {
   const ordinalSuffix = getOrdinalSuffix(dayOfMonth);
   const formattedDate = `${dayOfWeek}, ${month} ${dayOfMonth}${ordinalSuffix}`;
 
+  
   return (
     <Card>
       <CardHeader>
@@ -89,6 +105,32 @@ const UserInGroupCard: FC<GroupProp> = (prop: GroupProp) => {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
+
+        <div className="centered-content">
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>See other guests</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ScrollArea className="h-72 w-48 rounded-md border">
+                  {/* <div className="p-4">
+                  <h4 className="mb-4 text-sm font-medium leading-none">Guests</h4>
+                    {guests.map((guests) => (
+                      <>
+                    <div key={tag} className="text-sm">
+                      {tag}
+                    </div>
+                  
+                    </>
+                      ))}
+                  </div> */}
+    </ScrollArea>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+        </div>
+
       </CardContent>
       <CardFooter>
         <Button onClick={handleClick} variant="longDestructive">
