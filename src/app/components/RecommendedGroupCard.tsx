@@ -34,7 +34,8 @@ interface GroupProp {
   price: number;
   groupID: number,
   email: string | null | undefined,
-  progress: number
+  progress: number,
+  numMembers: number,
 }
 
 type CardProps = React.ComponentProps<typeof Card>;
@@ -52,7 +53,9 @@ const RecommendedGroupCard: FC<GroupProp> = (prop: GroupProp) => {
     if (response.status === 200 && response.data && Array.isArray(response.data)) {
       const usersArray = response.data;
       const totalUsers = usersArray.length;
-  
+      
+      prop.numMembers = totalUsers;
+
       // Calculate progress based on some logic (e.g., percentage of users)
       prop.progress = Math.floor((totalUsers / prop.capacity) * 100); // Example logic
 
@@ -116,6 +119,9 @@ const RecommendedGroupCard: FC<GroupProp> = (prop: GroupProp) => {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
+        <div>
+          {prop.numMembers} / {prop.capacity} people signed up.
+        </div>
         <Progress  value={prop.progress} />
       </CardContent>
       <CardFooter>
