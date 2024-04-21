@@ -13,7 +13,7 @@ export default function Home() {
           fill={true}
           src="/images/campfire.jpg" // Assuming the image is static and public
           alt="campfire"
-          className="object-cover opacity-70"
+          className="object-cover opacity-90"
         />
       </div>
       <div className="absolute inset-0 flex flex-col justify-center items-center text-white">
