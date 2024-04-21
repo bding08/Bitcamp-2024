@@ -21,14 +21,14 @@ export default function Home() {
           {" "}
           {/* Set width to 3/4 of the screen */}
           <h1 className="text-7xl text-center font-bold mb-4">
-            Welcome to ConnectED
+            Welcome to Eventure
           </h1>
           <p className="text-xl text-center px-5">
-            At ConnectED, we're about more than just online interactions; we're
+            At Eventure, we're about more than just online interactions; we're
             here to bring you together with like-minded individuals, off the
             screen and into real-life adventures. When you join, we get to know
             you—your personality, interests, and passions. Using cutting-edge
-            AI, ConnectED identifies the most exciting activities and events
+            AI, Eventure identifies the most exciting activities and events
             happening in your city tailored just for you.
           </p>
         </div>
