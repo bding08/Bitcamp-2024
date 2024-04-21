@@ -1,20 +1,35 @@
 import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
-import { SlidersHorizontal, Users } from "lucide-react";
+import { Settings, SlidersHorizontal, User, Users } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import UserAccountNav from "./UserAccountNav";
+// import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 const navbar = async () => {
   const session = await getServerSession(authOptions);
 
   return (
     //' py-2 border-b border-s-zinc-200 fixed w-full z-10 top-0'
-    <div className="py-2 bg-zinc-100 border-b border-s-zinc-200 fixed w-full z-10 top-0">
+    <div className="py-2 bg: bg-zinc-900  fixed w-full z-10 top-0">
       <div className="container flex items-center justify-between">
         <div className="flex items-center space-x-10">
-          <Link href="/">
-            <Users />
+          <Link className="text-white" href="/">
+            Conntected
           </Link>
           <Link href="/user-recommendations">
             <Button variant="outline2">Recommended Activities</Button>
@@ -25,16 +40,40 @@ const navbar = async () => {
         </div>
         <div>
           {session?.user ? (
-            <div className="flex justify-between items-center space-x-12">
-              <UserAccountNav />
-              <Link href="/interests">
-                <SlidersHorizontal />
-              </Link>
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <User color="white" size={32} />
+
+                {/* <Button variant="outline">Settings</Button> */}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem>
+                    <Link href="/interests">Edit Interests</Link>
+                    <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+
+                <DropdownMenuItem>
+                  <UserAccountNav />
+                  {/* Log out */}
+                  <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
-            <Link className={buttonVariants()} href="/sign-in">
-              Sign In
-            </Link>
+            // <div className="flex justify-between items-center space-x-12">
+            //   <UserAccountNav />
+            //   <Link href="/interests">
+            //     <SlidersHorizontal />
+            //   </Link>
+            // </div>
+            <a href="/sign-in">
+              <Button variant="outline2">Sign In</Button>
+            </a>
           )}
         </div>
       </div>

@@ -3,7 +3,7 @@
 import { signOut } from "next-auth/react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
-import Link from 'next/link';
+import Link from "next/link";
 
 const UserAccountNav = () => {
   const router = useRouter();
@@ -16,11 +16,7 @@ const UserAccountNav = () => {
     router.refresh();
   };
 
-  return (
-    <Button onClick={onClick} variant="destructive">
-      Sign Out
-    </Button>
-  );
+  return <a onClick={onClick}>Sign Out</a>;
 };
 
 export default UserAccountNav;
