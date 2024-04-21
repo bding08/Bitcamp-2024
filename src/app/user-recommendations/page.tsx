@@ -71,6 +71,8 @@ const UserRecommendations = async () => {
                   price={obj.event.price}
                   groupID={obj.groupID}
                   email={emailID}
+                  progress={0}
+                  numMembers={0}
                 />
               );
             }

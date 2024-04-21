@@ -42,12 +42,14 @@ const navbar = async () => {
           {session?.user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <User color="white" size={32} cursor={"pointer"}/>
+                <User color="white" size={32} cursor={"pointer"} />
 
                 {/* <Button variant="outline">Settings</Button> */}
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>
+                  Hi, {session.user.username}
+                </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuItem>
