@@ -35,7 +35,7 @@ const navbar = async () => {
             <Button variant="outline2">Recommended Activities</Button>
           </Link>
           <Link href="/active-groups-page">
-            <Button variant="outline2">User Groups</Button>
+            <Button variant="outline2">My Groups</Button>
           </Link>
         </div>
         <div>
