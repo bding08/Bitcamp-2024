@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import InterestsBtn from "../components/InterestsBtn";
 import InterestPageFooter from "../components/InterestPageFooter";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import router from "next/router";
 import axios from "axios";
 
 const setupRoute = async () => {
@@ -23,7 +22,7 @@ const setupRoute = async () => {
 
   const personalWellness = ["Meditation", "Reading", "Writing"];
 
-  const travelAndOutdoor = ["Hiking", "Rafting", "Clibing", "Travel"];
+  const travelAndOutdoor = ["Hiking", "Rafting", "Climbing", "Travel"];
 
   const other = [
     "Cooking",
@@ -33,7 +32,7 @@ const setupRoute = async () => {
     "Gardening",
     "Fashion",
     "Film and cinema",
-    "Technology ",
+    "Technology",
     "History",
     "Science",
     "Gaming",
@@ -45,6 +44,7 @@ const setupRoute = async () => {
   const response = await axios.post("http://localhost:3000/api/userInterests", {
     email: session?.user.email,
   });
+
   const interestArr: string[] = response.data.interests;
 
   if (session?.user) {
@@ -57,6 +57,13 @@ const setupRoute = async () => {
             <h2 className="text-3xl  mb-4 pl-4">Fitness</h2>
 
             <div className="grid items-center justify-center grid-cols-3 w-full gap-4 container px10">
+              <div className="hidden">
+                <InterestsBtn
+                  key={"dummy"}
+                  name={"dummmy"}
+                  interests={interestArr}
+                />
+              </div>
               {fitness.map((interestItem) => (
                 <InterestsBtn
                   key={interestItem}
