@@ -28,8 +28,8 @@ const navbar = async () => {
     <div className="py-2 bg: bg-zinc-900  fixed w-full z-10 top-0">
       <div className="container flex items-center justify-between">
         <div className="flex items-center space-x-10">
-          <Link className="text-white" href="/">
-            Conntected
+          <Link className="text-white font-bold" href="/">
+            ConnectED
           </Link>
           <Link href="/user-recommendations">
             <Button variant="outline2">Recommended Activities</Button>
