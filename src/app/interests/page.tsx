@@ -32,7 +32,7 @@ const setupRoute = async () => {
     "Gardening",
     "Fashion",
     "Film and cinema",
-    "Technology ",
+    "Technology",
     "History",
     "Science",
     "Gaming",
@@ -44,11 +44,8 @@ const setupRoute = async () => {
   const response = await axios.post("http://localhost:3000/api/userInterests", {
     email: session?.user.email,
   });
-  const interestArr: string[] = [];
 
-  if (!response.data.interests === null) {
-    const interestArr: string[] = response.data.interests;
-  }
+  const interestArr: string[] = response.data.interests;
 
   if (session?.user) {
     return (
